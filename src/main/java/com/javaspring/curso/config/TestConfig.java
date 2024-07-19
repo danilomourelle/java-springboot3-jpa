@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.javaspring.curso.entities.Category;
 import com.javaspring.curso.entities.Order;
+import com.javaspring.curso.entities.OrderItem;
 import com.javaspring.curso.entities.Product;
 import com.javaspring.curso.entities.User;
 import com.javaspring.curso.entities.enums.OrderStatus;
 import com.javaspring.curso.repositories.CategoryRepo;
+import com.javaspring.curso.repositories.OrderItemRepo;
 import com.javaspring.curso.repositories.OrderRepo;
 import com.javaspring.curso.repositories.ProductRepo;
 import com.javaspring.curso.repositories.UserRepo;
@@ -33,6 +35,9 @@ public class TestConfig implements CommandLineRunner {
 
   @Autowired
   private ProductRepo productRepo;
+
+  @Autowired
+  private OrderItemRepo orderItemRepo;
 
   @Override
   public void run(String... args) throws Exception {
@@ -57,7 +62,7 @@ public class TestConfig implements CommandLineRunner {
     Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
     Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
     productRepo.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
-    
+
     p1.getCategories().add(cat2);
     p2.getCategories().add(cat1);
     p2.getCategories().add(cat3);
@@ -65,5 +70,11 @@ public class TestConfig implements CommandLineRunner {
     p4.getCategories().add(cat3);
     p5.getCategories().add(cat2);
     productRepo.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
+    OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+    OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+    OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+    OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+    orderItemRepo.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
   }
 }
