@@ -11,7 +11,7 @@ import com.javaspring.curso.repositories.UserRepo;
 
 @Service
 public class UserService {
- 
+
   @Autowired
   private UserRepo repository;
 
@@ -20,16 +20,29 @@ public class UserService {
   }
 
   public User findById(Long id) {
-   Optional<User> obj =  repository.findById(id);
+    Optional<User> obj = repository.findById(id);
 
-   return obj.get();
+    return obj.get();
   }
 
   public User insert(User user) {
     return repository.save(user);
   }
 
-  public void delete(Long userId) {
-    repository.deleteById(userId);
+  public void delete(Long id) {
+    repository.deleteById(id);
+  }
+
+  public User update(Long id, User user) {
+    User existingUser = repository.getReferenceById(id);
+    updateData(existingUser, user);
+
+    return repository.save(existingUser);
+  }
+
+  private void updateData(User existingUser, User user) {
+    existingUser.setName(user.getName());
+    existingUser.setEmail(user.getEmail());
+    existingUser.setPhone(user.getPhone());
   }
 }
