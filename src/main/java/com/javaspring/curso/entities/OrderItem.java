@@ -22,11 +22,11 @@ public class OrderItem implements Serializable {
   public OrderItem() {
   }
 
-  public OrderItem(Order order, Product product, Integer quantity, Double price) {
+  public OrderItem(Order order, Product product, Integer quantity) {
     id.setOrder(order);
     id.setProduct(product);
     this.quantity = quantity;
-    this.price = price;
+    this.price = product.getPrice();
   }
 
   @JsonIgnore
